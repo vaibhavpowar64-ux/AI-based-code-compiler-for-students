@@ -3,7 +3,7 @@ import Editor from "@monaco-editor/react";
 import { io } from "socket.io-client";
 
 // Connect to the backend
-const socket = io("http://127.0.0.1:5000");
+const socket = io(import.meta.env.VITE_API_URL?.replace("/api", "") || "http://127.0.0.1:5000");
 
 const CodeEditor = ({ code, setCode, language, onLanguageChange }) => {
     // Prevent infinite loops where an incoming change triggers an outgoing change
