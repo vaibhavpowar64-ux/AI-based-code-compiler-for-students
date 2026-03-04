@@ -35,14 +35,16 @@ app.use("/api/challenges", challengeRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/classrooms", classroomRoutes);
 
+// Start Server Immediately (Required for Render Port Binding)
+server.listen(PORT, () => {
+  console.log(`Server and WebSockets are running on port ${PORT}`);
+});
+
 // Database Connection
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
     console.log("Connected to MongoDB!");
-    server.listen(PORT, () => {
-      console.log(`Server and WebSockets are running on port ${PORT}`);
-    });
   })
   .catch((error) => {
     console.error("MongoDB connection error:", error);
