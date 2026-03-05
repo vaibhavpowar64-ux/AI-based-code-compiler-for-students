@@ -4,7 +4,8 @@ import { AuthContext } from "../context/AuthContext";
 import API from "../api/api";
 import CodeEditor from "../components/CodeEditor";
 import AnalyticsView from "../components/AnalyticsView";
-import { Play, LogOut, CheckCircle, AlertTriangle, Code, Activity, Trophy, User as UserIcon, Box, BookOpen } from "lucide-react";
+import { Play, LogOut, CheckCircle, AlertTriangle, Code, Activity, Trophy, User as UserIcon, Box, BookOpen, Layout } from "lucide-react";
+import ChallengesView from "../components/ChallengesView";
 
 const Dashboard = () => {
     const { user, logout } = useContext(AuthContext);
@@ -21,13 +22,16 @@ const Dashboard = () => {
 
     useEffect(() => {
         if (location.state && location.state.challenge) {
-            const passedChallenge = location.state.challenge;
-            setActiveChallengeName(passedChallenge.title);
-            setLanguage(passedChallenge.language);
-            setCode(passedChallenge.starterCode || `// Starter code for ${passedChallenge.title}\n`);
-            setActiveTab("editor");
+            handleSelectChallenge(location.state.challenge);
         }
     }, [location.state]);
+
+    const handleSelectChallenge = (challenge) => {
+        setActiveChallengeName(challenge.title);
+        setLanguage(challenge.language || "python");
+        setCode(challenge.starterCode || `// Starter code for ${challenge.title}\n`);
+        setActiveTab("editor");
+    };
 
     const handleLanguageChange = (lang) => {
         setLanguage(lang);
@@ -169,9 +173,17 @@ const Dashboard = () => {
                         {/* Left Pane - Editor */}
                         <div className="flex-col" style={{ flex: "0 0 60%", padding: "1rem", borderRight: "1px solid var(--glass-border)" }}>
                             {activeChallengeName && (
-                                <div className="mb-4 p-3 glass-panel flex items-center gap-3 border border-yellow-500 border-opacity-30 bg-yellow-500 bg-opacity-5">
-                                    <Trophy size={18} className="text-yellow-400" />
-                                    <span className="text-sm font-bold text-white tracking-wide">Active Challenge: <span className="text-yellow-400">{activeChallengeName}</span></span>
+                                <div className="mb-4 p-3 glass-panel flex items-center justify-between border border-yellow-500 border-opacity-30 bg-yellow-500 bg-opacity-5 animate-pulse-slow">
+                                    <div className="flex items-center gap-3">
+                                        <Trophy size={18} className="text-yellow-400" />
+                                        <span className="text-sm font-bold text-white tracking-wide">Mission: <span className="text-yellow-400">{activeChallengeName}</span></span>
+                                    </div>
+                                    <button
+                                        onClick={() => setActiveChallengeName(null)}
+                                        className="text-[10px] text-muted hover:text-white uppercase tracking-widest font-bold"
+                                    >
+                                        Abandon
+                                    </button>
                                 </div>
                             )}
                             <div className="glass-panel" style={{ flex: 1, padding: "1rem", display: "flex", flexDirection: "column" }}>
@@ -296,6 +308,8 @@ const Dashboard = () => {
                             </div>
                         </div>
                     </>
+                ) : activeTab === "challenges" ? (
+                    <ChallengesView onSelectChallenge={handleSelectChallenge} />
                 ) : (
                     <AnalyticsView />
                 )}
