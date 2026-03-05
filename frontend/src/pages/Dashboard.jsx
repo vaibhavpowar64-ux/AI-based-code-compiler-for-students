@@ -124,6 +124,12 @@ const Dashboard = () => {
                             style={{ display: "flex", alignItems: "center", gap: "0.5rem", background: activeTab === 'analytics' ? 'var(--primary)' : 'transparent', color: activeTab === 'analytics' ? '#fff' : 'var(--text-muted)' }}>
                             <Activity size={18} /> Progress Dashboard
                         </button>
+                        <button
+                            onClick={() => setActiveTab("challenges")}
+                            className="px-4 py-2 rounded font-medium transition-colors"
+                            style={{ display: "flex", alignItems: "center", gap: "0.5rem", background: activeTab === 'challenges' ? 'var(--primary)' : 'transparent', color: activeTab === 'challenges' ? '#fff' : 'var(--text-muted)' }}>
+                            <Trophy size={18} /> Challenges
+                        </button>
                     </div>
                 </div>
 
