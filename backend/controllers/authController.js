@@ -46,7 +46,8 @@ const registerUser = async (req, res) => {
             res.status(400).json({ message: "Invalid user data" });
         }
     } catch (error) {
-        res.status(500).json({ message: "Server error", error: error.message });
+        console.error("Registration error:", error);
+        res.status(500).json({ message: `Server error: ${error.message}` });
     }
 };
 
@@ -89,7 +90,8 @@ const loginUser = async (req, res) => {
             res.status(401).json({ message: "Invalid email or password" });
         }
     } catch (error) {
-        res.status(500).json({ message: "Server error", error: error.message });
+        console.error("Login error:", error);
+        res.status(500).json({ message: `Server error: ${error.message}` });
     }
 };
 
@@ -106,7 +108,8 @@ const getMe = async (req, res) => {
             role: user.role,
         });
     } catch (error) {
-        res.status(500).json({ message: "Server error", error: error.message });
+        console.error("GetMe error:", error);
+        res.status(500).json({ message: `Server error: ${error.message}` });
     }
 };
 
