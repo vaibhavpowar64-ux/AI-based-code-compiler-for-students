@@ -3,7 +3,7 @@ const { Server } = require("socket.io");
 const setupSocket = (server) => {
     const io = new Server(server, {
         cors: {
-            origin: ["http://localhost:5173", "http://127.0.0.1:5173"], // Vite default origin
+            origin: ["http://localhost:5173", "http://127.0.0.1:5173", "https://ai-based-code-compiler-for-student.vercel.app"], // Vite default origin and deployed frontend
 
             methods: ["GET", "POST"]
         }
