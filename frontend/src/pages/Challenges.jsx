@@ -5,6 +5,8 @@ import { Trophy, Code, Clock, Shield } from "lucide-react";
 
 const Challenges = () => {
     const navigate = useNavigate();
+    const [challenges, setChallenges] = useState([]);
+    const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
