@@ -5,8 +5,7 @@ import { Trophy, Code, Clock, Shield } from "lucide-react";
 
 const Challenges = () => {
     const navigate = useNavigate();
-    const [challenges, setChallenges] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchChallenges = async () => {
@@ -15,6 +14,7 @@ const Challenges = () => {
                 setChallenges(res.data);
             } catch (error) {
                 console.error("Failed to fetch challenges:", error);
+                setError(error.message);
             } finally {
                 setLoading(false);
             }
@@ -33,6 +33,18 @@ const Challenges = () => {
 
     if (loading) {
         return <div className="flex items-center justify-center h-full min-h-screen text-muted">Loading Challenges...</div>;
+    }
+
+    if (error) {
+        return (
+            <div className="flex flex-col items-center justify-center h-full min-h-screen text-error p-8 text-center">
+                <Shield size={48} className="mb-4 opacity-50" />
+                <h3 className="text-xl font-bold mb-2">Connection Issue</h3>
+                <p className="text-muted max-w-md">Could not fetch challenges from the server. Please verify your backend is running at {import.meta.env.VITE_API_URL || "default path"}.</p>
+                <div className="mt-4 p-2 bg-red-900 bg-opacity-20 border border-red-900 rounded text-xs px-4">{error}</div>
+                <button onClick={() => window.location.reload()} className="mt-6 btn-primary py-2 px-6">Retry Connection</button>
+            </div>
+        );
     }
 
     return (

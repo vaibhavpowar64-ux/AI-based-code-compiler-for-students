@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import API from "../api/api";
 import CodeEditor from "../components/CodeEditor";
@@ -8,6 +8,7 @@ import { Play, LogOut, CheckCircle, AlertTriangle, Code, Activity, Trophy, User 
 
 const Dashboard = () => {
     const { user, logout } = useContext(AuthContext);
+    const navigate = useNavigate();
     const [code, setCode] = useState('print("Hello, World!")');
     const [language, setLanguage] = useState("python");
     const [output, setOutput] = useState("");
@@ -127,23 +128,23 @@ const Dashboard = () => {
                     <div style={{ display: "flex", alignItems: "center", gap: "1.5rem", paddingRight: "1.5rem", borderRight: "1px solid var(--glass-border)" }}>
                         <button className="text-muted hover:text-white transition-colors text-sm font-medium"
                             style={{ display: "flex", alignItems: "center", gap: "0.5rem", background: "none", border: "none", cursor: "pointer" }}
-                            onClick={() => window.location.href = '/challenges'}>
+                            onClick={() => navigate('/challenges')}>
                             <Trophy size={16} className="text-yellow-400" /> Challenges
                         </button>
                         <button className="text-muted hover:text-white transition-colors text-sm font-medium"
                             style={{ display: "flex", alignItems: "center", gap: "0.5rem", background: "none", border: "none", cursor: "pointer" }}
-                            onClick={() => window.location.href = '/leaderboard'}>
+                            onClick={() => navigate('/leaderboard')}>
                             <Activity size={16} className="text-blue-400" /> Leaderboard
                         </button>
 
                         <button className="text-muted hover:text-white transition-colors text-sm font-medium"
                             style={{ display: "flex", alignItems: "center", gap: "0.5rem", background: "none", border: "none", cursor: "pointer" }}
-                            onClick={() => window.location.href = '/profile'}>
+                            onClick={() => navigate('/profile')}>
                             <UserIcon size={16} className="text-purple-400" /> Profile
                         </button>
                         <button className="text-muted hover:text-white transition-colors text-sm font-medium"
                             style={{ display: "flex", alignItems: "center", gap: "0.5rem", background: "none", border: "none", cursor: "pointer" }}
-                            onClick={() => window.location.href = '/speedtest'}>
+                            onClick={() => navigate('/speedtest')}>
                             <Box size={16} className="text-orange-400" /> Speed Test
                         </button>
                     </div>

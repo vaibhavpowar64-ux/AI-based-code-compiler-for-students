@@ -3,10 +3,9 @@ import API from "../api/api";
 import { Trophy, Medal, Award, User } from "lucide-react";
 
 const Leaderboard = () => {
-    const [leaders, setLeaders] = [null, () => { }]; // Placeholder for now, build fast
-
     const [players, setPlayers] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchLeaderboard = async () => {
@@ -15,6 +14,7 @@ const Leaderboard = () => {
                 setPlayers(res.data);
             } catch (error) {
                 console.error("Failed to fetch leaderboard:", error);
+                setError(error.message);
             } finally {
                 setLoading(false);
             }
