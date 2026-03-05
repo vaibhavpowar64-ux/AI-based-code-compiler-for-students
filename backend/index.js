@@ -41,11 +41,18 @@ server.listen(PORT, () => {
 });
 
 // Database Connection
-mongoose
-  .connect(process.env.MONGO_URI)
-  .then(() => {
-    console.log("Connected to MongoDB!");
-  })
-  .catch((error) => {
-    console.error("MongoDB connection error:", error);
-  });
+const connectDB = async () => {
+  try {
+    if (!process.env.MONGO_URI) {
+      throw new Error("MONGO_URI environment variable is missing!");
+    }
+    await mongoose.connect(process.env.MONGO_URI);
+    console.log("Connected to MongoDB Atlas successfully!");
+  } catch (error) {
+    console.error("MongoDB connection error:", error.message);
+    // Don't exit the process so Render doesn't kill the container, 
+    // but operations will fail until fixed.
+  }
+};
+
+connectDB();
